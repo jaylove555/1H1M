@@ -64,40 +64,6 @@ class _ClockPageState extends State<ClockPage> {
               ),
             ),
           ),
-          Flexible(
-            flex: 2,
-            fit: FlexFit.tight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Timezone',
-                  style: TextStyle(
-                      fontFamily: 'avenir',
-                      fontWeight: FontWeight.w500,
-                      color: CustomColors.primaryTextColor,
-                      fontSize: 24),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.language,
-                      color: CustomColors.primaryTextColor,
-                    ),
-                    SizedBox(width: 16),
-                    Text(
-                      'UTC' + offsetSign + timezoneString,
-                      style: TextStyle(
-                          fontFamily: 'avenir',
-                          color: CustomColors.primaryTextColor,
-                          fontSize: 14),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
