@@ -17,8 +17,6 @@ class Alarm extends ChangeNotifier {
   bool isStopped = false;
   Timer? timer;
 
-  get androidPlatformChannelSpecifics => null;
-
   void startTimer() {
     isCountingDown = true;
     isStopped = false;
@@ -27,6 +25,7 @@ class Alarm extends ChangeNotifier {
         isCountingDown = false;
         timer?.cancel();
         start = 60 * 60;
+        // showNotification();
         startTimer();
         notifyListeners();
       } else if (isStopped) {

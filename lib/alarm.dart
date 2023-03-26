@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/alarm_provider.dart';
 import 'package:flutter_application/notification_widget.dart';
+import 'package:flutter_application/theme_data.dart';
 import 'package:provider/provider.dart';
 
 class CountdownTimer extends StatefulWidget {
@@ -102,7 +103,10 @@ class _CountdownTimerState extends State<CountdownTimer> {
                       return ElevatedButton(
                         onPressed:
                             value.isCountingDown ? null : value.startTimer,
-                        child: Text('Start'),
+                        child: Text(
+                          'Start',
+                          style: TextStyle(fontSize: 20, fontFamily: 'Avenir'),
+                        ),
                       );
                     },
                   ),
@@ -111,7 +115,13 @@ class _CountdownTimerState extends State<CountdownTimer> {
                     builder: (context, value, child) {
                       return ElevatedButton(
                         onPressed: value.isStopped ? null : value.stopTimer,
-                        child: Text('Stop'),
+                        child: Text(
+                          'Stop',
+                          style: TextStyle(fontSize: 20, fontFamily: 'Avenir'),
+                        ),
+                        // style: ElevatedButton.styleFrom(
+                        //   primary: Colors.lightBlue,
+                        // ),
                       );
                     },
                   ),
@@ -120,7 +130,10 @@ class _CountdownTimerState extends State<CountdownTimer> {
                     builder: (context, value, child) {
                       return ElevatedButton(
                         onPressed: value.resetTimer,
-                        child: Text('Reset'),
+                        child: Text(
+                          'Reset',
+                          style: TextStyle(fontSize: 20, fontFamily: 'Avenir'),
+                        ),
                       );
                     },
                   ),
