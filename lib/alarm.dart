@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/alarm_provider.dart';
-import 'package:flutter_application/notification_widget.dart';
 import 'package:flutter_application/theme_data.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +30,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
         child: Container(
           color: Color(0xFF2D2F41),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +137,35 @@ class _CountdownTimerState extends State<CountdownTimer> {
                     },
                   ),
                 ],
-              )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DropdownButton(
+                    value: selectedSound,
+                    items: sounds
+                        .map((sound) =>
+                            DropdownMenuItem(child: Text(sound), value: sound))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedSound = value.toString();
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 100,
+                    width: 25,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // showNotification();
+                      context.read<Alarm>().showNotification();
+                    },
+                    child: Text('selec'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

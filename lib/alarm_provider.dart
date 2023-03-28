@@ -1,15 +1,20 @@
 import 'dart:async';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application/main.dart';
-import 'package:flutter_application/notification_widget.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:provider/provider.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
-AudioPlayer audioPlayer = AudioPlayer();
+
+List<String> sounds = [
+  'samma_arahang.wav',
+  'fahsai_hallo.wav',
+  'found_sms_unread.wav',
+  'have_new_message_coming.wav',
+  'have_new_message_coming.wav',
+  'mail_coming.wav',
+  'meet_coming.wav'
+];
+String selectedSound = 'samma_arahang.wav';
 
 class Alarm extends ChangeNotifier {
   int start = 60 * 60;
@@ -69,10 +74,10 @@ class Alarm extends ChangeNotifier {
       'channel_name',
       importance: Importance.max,
       priority: Priority.high,
-      sound: RawResourceAndroidNotificationSound('a_long_cold_sting'),
+      sound: RawResourceAndroidNotificationSound('samma_arahang'),
     );
     var iOSPlatformChannelSpecifics = DarwinNotificationDetails(
-      sound: 'a_long_cold_sting.wav',
+      sound: 'samma_arahang.wav',
     );
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
