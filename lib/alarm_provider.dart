@@ -74,10 +74,10 @@ class Alarm extends ChangeNotifier {
       'channel_name',
       importance: Importance.max,
       priority: Priority.high,
-      sound: RawResourceAndroidNotificationSound('samma_arahang'),
+      sound: RawResourceAndroidNotificationSound('have_new_message_coming'),
     );
     var iOSPlatformChannelSpecifics = DarwinNotificationDetails(
-      sound: 'samma_arahang.wav',
+      sound: 'have_new_message_coming.wav',
     );
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
