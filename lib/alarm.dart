@@ -1,7 +1,6 @@
-import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/alarm_provider.dart';
-import 'package:flutter_application/theme_data.dart';
 import 'package:provider/provider.dart';
 
 class CountdownTimer extends StatefulWidget {
@@ -10,6 +9,16 @@ class CountdownTimer extends StatefulWidget {
 }
 
 class _CountdownTimerState extends State<CountdownTimer> {
+  List<String> itemsList = [
+    'samma_arahang.wav',
+    'meet_coming.mp3',
+    'mail_coming.mp3',
+    'have_new_message.mp3',
+    'found_sms_unread.mp3',
+    'fahsai_hallo.mp3'
+  ];
+  String? selectedItem = 'samma_arahang.wav';
+
   @override
   void dispose() {
     // _timer?.cancel();
@@ -30,7 +39,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
         child: Container(
           color: Color(0xFF2D2F41),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -118,9 +127,6 @@ class _CountdownTimerState extends State<CountdownTimer> {
                           'Stop',
                           style: TextStyle(fontSize: 20, fontFamily: 'Avenir'),
                         ),
-                        // style: ElevatedButton.styleFrom(
-                        //   primary: Colors.lightBlue,
-                        // ),
                       );
                     },
                   ),
@@ -139,32 +145,38 @@ class _CountdownTimerState extends State<CountdownTimer> {
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  DropdownButton(
-                    value: selectedSound,
-                    items: sounds
-                        .map((sound) =>
-                            DropdownMenuItem(child: Text(sound), value: sound))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedSound = value.toString();
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 100,
-                    width: 25,
-                  ),
                   ElevatedButton(
-                    onPressed: () {
-                      // showNotification();
-                      context.read<Alarm>().showNotification();
-                    },
-                    child: Text('selec'),
-                  ),
+                      child: Text('อย่ากด'),
+                      onPressed: () {
+                        final PlayerAudio = AudioCache();
+                        PlayerAudio.play("have_new_message_coming.mp3");
+                      }),
                 ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: SizedBox(
+                  width: 250,
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.green))),
+                    value: selectedItem,
+                    items: itemsList
+                        .map((item) => DropdownMenuItem(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: TextStyle(fontSize: 15),
+                            )))
+                        .toList(),
+                    onChanged: (item) => setState(() => selectedItem = item),
+                  ),
+                ),
               ),
             ],
           ),
