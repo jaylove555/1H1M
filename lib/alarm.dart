@@ -1,11 +1,64 @@
+import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application/alarm_provider.dart';
 import 'package:provider/provider.dart';
 
 class CountdownTimer extends StatefulWidget {
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
+}
+
+class Alarm extends ChangeNotifier {
+  int start = 60 * 60;
+  bool isCountingDown = false;
+  bool isStopped = false;
+  Timer? timer;
+
+  void startTimer() {
+    isCountingDown = true;
+    isStopped = false;
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (start < 1) {
+        isCountingDown = false;
+        timer.cancel();
+        start = 60 * 60;
+        startTimer();
+        notifyListeners();
+        playsound();
+      } else if (isStopped) {
+        timer.cancel();
+        notifyListeners();
+      } else {
+        start--;
+        notifyListeners();
+      }
+    });
+  }
+
+  void stopTimer() {
+    isStopped = true;
+    timer?.cancel();
+    isCountingDown = false;
+    notifyListeners();
+  }
+
+  void resetTimer() {
+    if (isCountingDown) {
+      timer?.cancel();
+    }
+    isCountingDown = false;
+    isStopped = false;
+    start = 60 * 60;
+    playsound();
+  }
+
+  Future<void> playsound() async {
+    final PlayerAudio = AudioCache();
+    // PlayerAudio.play('found_sms_unread.mp3');
+    // PlayerAudio.play(_CountdownTimerState().res);
+    PlayerAudio.play(_CountdownTimerState().res.toString());
+    notifyListeners();
+  }
 }
 
 class _CountdownTimerState extends State<CountdownTimer> {
@@ -17,7 +70,9 @@ class _CountdownTimerState extends State<CountdownTimer> {
     'found_sms_unread.mp3',
     'fahsai_hallo.mp3'
   ];
-  String? selectedItem = 'samma_arahang.wav';
+  String? selectedItem = 'fahsai_hallo.mp3';
+
+  String res = '';
 
   @override
   void dispose() {
@@ -144,16 +199,6 @@ class _CountdownTimerState extends State<CountdownTimer> {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  ElevatedButton(
-                      child: Text('อย่ากด'),
-                      onPressed: () {
-                        final PlayerAudio = AudioCache();
-                        PlayerAudio.play("have_new_message_coming.mp3");
-                      }),
-                ],
-              ),
               SizedBox(
                 height: 20,
               ),
@@ -174,10 +219,19 @@ class _CountdownTimerState extends State<CountdownTimer> {
                               style: TextStyle(fontSize: 15),
                             )))
                         .toList(),
-                    onChanged: (item) => setState(() => selectedItem = item),
+                    onChanged: (value) =>
+                        setState(() => selectedItem = value.toString()),
                   ),
                 ),
               ),
+              ElevatedButton(
+                onPressed: () => setState(() {
+                  res = selectedItem.toString();
+                }),
+                child: Text('เลือกเสียง'),
+              ),
+              Text(res),
+              ElevatedButton(onPressed: () => print(res), child: Text('กด'))
             ],
           ),
         ),
